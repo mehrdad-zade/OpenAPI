@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q&A App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#question-form').submit(function(event) {
+                event.preventDefault();
+                var question = $('#question-input').val();
+                var context = ''; // Remove context input
+                $.ajax({
+                    url: '/api/question',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify({ 'question': question, 'context': context }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        var questionElement = $('<p>').addClass('oval-question').addClass('right-align').text(question);
+                        var answerElement = $('<p>').addClass('oval-answer').text(response.answer);
+                        var questionContainer = $('<div>').addClass('question-container').append(questionElement);
+                        var answerContainer = $('<div>').addClass('answer-container').append(answerElement);
+                        var outputContainer = $('<div>').addClass('output-container').append(questionContainer, answerContainer);
+                        $('#answer-output').append(outputContainer);
+                        $('#question-input').val('');
+                    }
+                });
+            });
+
+            $('#question-input').keypress(function(event) {
+                if (event.which === 13) {
+                    event.preventDefault();
+                    $('#question-form').submit();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form id="question-form">
+            <input type="text" id="question-input" placeholder="Enter your question" required>
+            <button type="submit">Ask</button>
+        </form>
+        <div id="answer-output"></div>
+    </div>
+</body>
+</html>

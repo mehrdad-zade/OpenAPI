@@ -1,0 +1,38 @@
+.oval-question {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.right-align {
+    float: right;
+}
+
+.oval-answer {
+    display: inline-block;
+    background-color: lightgray;
+    color: black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.question-container {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#question-form {
+    width: 100%;
+}
+
+.container {
+    max-width: 600px; /* Adjust the max-width as needed */
+    margin: 0 auto;
+}
