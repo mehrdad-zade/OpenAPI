@@ -52,7 +52,7 @@ def post_request(user_input):
     
     return response
 
-def chat():
+def chat_commandline():
     print("Welcome to the Question Answering System!")
     print("Type 'exit' to quit.")
     

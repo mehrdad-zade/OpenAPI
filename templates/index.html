@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q&A App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Add a global variable to store the question text
+var questionText = '';
+
+$(document).ready(function() {
+    $('#question-form').submit(function(event) {
+        event.preventDefault();
+        questionText = $('#question-input').val(); // Store the question text
+        var context = ''; // Remove context input
+        $.ajax({
+            url: '/api/question',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify({ 'question': questionText, 'context': context }),
+            contentType: 'application/json',
+            success: function(response) {
+                var questionElement = $('<p>').addClass('oval-question').addClass('right-align').text(questionText);
+                var answerElement = $('<p>').addClass('oval-answer').text(response.answer);
+                var questionContainer = $('<div>').addClass('question-container').append(questionElement);
+                var answerContainer = $('<div>').addClass('answer-container').append(answerElement);
+                var outputContainer = $('<div>').addClass('output-container').append(questionContainer, answerContainer);
+                $('#answer-output').append(outputContainer);
+                $('#question-input').val('');
+
+                // Send the question text to the Flask application
+                $.ajax({
+                    url: '/api/receive_question',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify({ 'question': questionText }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('Question sent successfully');
+                    },
+                    error: function(error) {
+                        console.log('Failed to send question');
+                    }
+                });
+            }
+        });
+    });
+
+    $('#question-input').keypress(function(event) {
+        if (event.which === 13) {
+            event.preventDefault();
+            $('#question-form').submit();
+        }
+    });
+});
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form id="question-form">
+            <input type="text" id="question-input" placeholder="Enter your question" required>
+            <button type="submit">Ask</button>
+        </form>
+        <div id="answer-output"></div>
+    </div>
+</body>
+</html>
