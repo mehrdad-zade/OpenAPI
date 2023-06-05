@@ -7,10 +7,29 @@ generate natural language or code
 
 import requests
 import json
+import openai
 from secrets_1 import OpenAI_API_KEY
 
-def get_answer(user_input):
-    url = 'https://api.openai.com/v1/chat/completions'
+def chatGPT4_response(user_input):
+    openai.api_key = OpenAI_API_KEY
+    res = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+                {"role": "system", "content": user_input}]
+        )
+    return res["choices"][0]["message"]["content"]
+
+def chatGPT3_response(user_input):
+    openai.api_key = OpenAI_API_KEY
+    res = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+                {"role": "system", "content": user_input}]
+        )
+    return res["choices"][0]["message"]["content"]
+
+def post_request(user_input):
+    url = 'https://api.openai.com/v1/chat/completion'
 
     # refer to documentation for refined parameters: https://platform.openai.com/docs/api-reference/chat/create
     request_body = {"role" : "user", "content" : user_input}
@@ -43,7 +62,9 @@ def chat():
         if user_input.lower() == 'exit':
             break
         
-        answer = get_answer(user_input)
+        # answer = post_request(user_input)
+        answer = chatGPT3_response(user_input)
+        # answer = chatGPT4_response(user_input)
         print("Answer:", answer)
         print()
     

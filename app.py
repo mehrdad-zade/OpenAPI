@@ -1,9 +1,9 @@
 
-from openAI import gpt3, test
+from openAI import gpt, test
 
 def main():
-    test
-    # gpt3.chat()
+    # test
+    gpt.chat()
 
 if __name__ == '__main__':
     main()    
