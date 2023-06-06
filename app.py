@@ -20,5 +20,3 @@ def index():
     return render_template('index.html')
 
 
-# run instructions:
-# FLASK_APP=app.py flask run  
