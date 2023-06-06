@@ -4,10 +4,12 @@
 ```
 source myenv/bin/activate
 
-# run instructions:
-```
+### run instructions:
+s
 FLASK_APP=app.py flask run  
 
+### Research
+review the research area and the readMe for background on the math behind ML
 
 
 
