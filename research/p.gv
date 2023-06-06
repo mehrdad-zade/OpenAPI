@@ -1,0 +1,19 @@
+digraph {
+	graph [rankdir=LR]
+	A
+	B
+	D
+	E
+	F
+	A -> B
+	B -> D
+	D -> E
+	E -> F
+	subgraph child {
+		graph [rank=min rankdir=LR]
+		node [shape=box]
+		C
+		A -> C
+		C -> D
+	}
+}
