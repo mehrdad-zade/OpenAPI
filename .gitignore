@@ -1,4 +1,5 @@
 secrets.py
 secrets_1.py
 secret*
-myenv
+myenv/
+__pycache__/
